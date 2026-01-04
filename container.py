@@ -5,10 +5,25 @@ from cafe import Cafe
 from customer import CustomerGenerator
 from stat_saver import StatSaver
 from interfaces import IStorage, IMarket, IBarista, ICafe, IStatSaver
+from typing import Optional
 
+# Додаю паттерн Singleton для контейнера залежностей
 
 class DIContainer:
+
+    _instance: Optional["DIContainer"] = None
+
+    def __new__(cls):            #перевизначаємо метод створення нового екземпляра класу
+        if cls._instance is None:
+            cls._instance = super(DIContainer, cls).__new__(cls)
+            cls._instance._initialized = False
+        return cls._instance
+
     def __init__(self):
+        if self._initialized:    #якщо вже ініціалізовано, то нічо не вертаємо
+            return
+        self._initialized = True
+
         self.stat_saver: IStatSaver = StatSaver()
         state = self.stat_saver.load_state()
         

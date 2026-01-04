@@ -47,7 +47,14 @@ class CafeSimulation:
 
 
 if __name__ == "__main__":
-    container = DIContainer()
+    container = DIContainer() 
+    container1 = DIContainer() 
     simulation = CafeSimulation(container)
     simulation.run()
     simulation.run()
+
+a = container is container1  # Перевірка Singleton
+if a:
+    print("DIContainer є Singleton")
+else:
+    print("DIContainer не є Singleton")
